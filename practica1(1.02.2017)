@@ -1,0 +1,8 @@
+# SERIESDETIEMPO
+motral <- tempfile()
+download.file ("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/motral/2015/microdatos/motral2015_bases_datos_dbf.zip",motral)
+files = unzip(motral, list=TRUE)$Name
+unzip(motral,files=files[grepl("dbf",files)])
+install.packages("foreign")
+require(foreign)
+motral2015<- data.frame(read.dbf("motral2015_cuestionario.dbf"))
