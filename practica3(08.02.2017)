@@ -1,0 +1,39 @@
+### vamos a simular 1 marcador
+### para la simulacion en principio necesitamos alguna informacion
+###valor maxim, minimo, el numero de datos
+
+### en este ejemplo vamos a porponer la pobñacopm en mexico
+##que el valor minimo seran 100, max 120 15 datos que inicie en 2000
+pob<- sample (100:120,15, replace=F)
+pob
+### la convertimos en serie de tiempo 
+pobts <- ts(pob,frequency=1,start=(2000)) ### ts es la funcon para que r reconozca la serie de tiempo
+## la frecuencia es el tiempo en el que esta y donde empieza
+end (pobts)## donde termina la serie de tiempo 
+start(pobts) ## para saber donde inicia la serie
+plot(pobts)##darle formato
+plot(aggregate(pobts)) ### graficar la serie de timepo 
+
+## bajar del inegi la ocupacion de las personas
+## importar csv
+infor<-ts(read.csv(("C:\\Users\\SALA-D14\\Downloads\\infor.csv")),frequency=4,start=(2005))
+infor
+
+infor<-ts(read.csv(("C:\\Users\\SALA-D14\\Downloads\\infor.csv"),header=T),frequency=4,start=(2005))
+infor
+
+
+#########################################################################################################
+indi<-(read.csv(("C:\\Users\\SALA-D14\\Downloads\\st.csv")))
+indist<-ts(indi,frequency = 4, start=(2005))
+decost<- ts(indi[,1],start=2005,freq=4,end=2017) ### (1°rngloes , 2° columnas en los corchetes)
+
+decost
+
+ocup<- ts(indi[,2],start=2005,freq=4,end=2017)
+ocup
+trab<- ts(indi[,3],start=2005,freq=4,end=2017)
+trab
+asal<- ts(indi[,4],start=2005,freq=4,end=2017)
+asal
+
