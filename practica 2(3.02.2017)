@@ -1,0 +1,10 @@
+data ("AirPassengers")
+class(AirPassengers)
+start(AirPassengers) ## muestra en que año inicia tu serie de tiempo
+end(AirPassengers) ## en que año termina la serie de tiempo
+frequency(AirPassengers) ## t dice como son los datos en este caso son datos mensuales por ser 12
+summary (AirPassengers) ## TE DA UN RESUMEN DE ESTADISTICOS DESCRIPTIVOS
+plot(AirPassengers) ## grafica la serie 
+##generar una secuencia con una serie de tiempo funcion de secuencia "cseq"
+
+
