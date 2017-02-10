@@ -1,0 +1,60 @@
+####### practica 4(10.02.2017)
+####pasos para bajar base de datos
+##1. Buscamos en INEGI
+##2. Bajamos la ST  
+##3. Ubicar la ruta de la st en  la computadora
+##4. Importamos en R el archivo .csv
+##5. Reconocer el archivo cono ST
+##ejercicio
+##objeto 1 de numero de profecionistas (mill) rango de 5 a 8
+##objeto 2 crece pib rango de 0 a 5
+##objeto 3 porcentaje de ocupados rango de 40 a 60 
+##objeto 4 porcentaje de desocupados rango de 3 a 8
+objeto1<-sample(5:8,60,replace=TRUE) ## el 60 es el numeor de datos que quieres
+objeto2<-sample(0:5,60,replace=TRUE) 
+objeto3<-sample(40:60,60,replace=TRUE) 
+objeto4<-sample(3:8,60,replace=TRUE) 
+## 1) Una vez que generen los datos hacer un data frame ( es como una matriz pero no tiene las propiedades de la matriz)
+## de los 4 objetos
+conjunto<- data.frame(objeto1,objeto2,objeto3,objeto4)
+conjunto
+## 2) modtrar en la consola los primeros 12 y los ultimos 12 datos
+conjunto[1:12,] ## primera entrada renglones, la segunda entrada se refiere a columnas
+## muestera los primeros 12 renglones 
+conjunto[49:60,] ## muestra los ultimos 12 renglones
+## 3) cinvertir los objetos en series de tiempo
+# desde el data frame comenzando en 2010 y sin datos mensuales
+objeto1st<- ts(objeto1, frequency = 12,start=(2010))
+objeto2st<- ts(objeto2, frequency = 12,start=(2010))
+objeto3st<- ts(objeto3, frequency = 12,start=(2010))
+objeto4st<- ts(objeto4, frequency = 12,start=(2010))
+end(objeto1st)
+## 4) graficar los profecionistas y ocupados en la misma imagen
+plot(cbind(objeto1st,objeto3st))
+## 5) graficar pib y desocupados en la misma imagen
+plot(cbind(objeto2st,objeto4st))
+## 6) graficar todas juntas
+plot(cbind(objeto1st,objeto2st,objeto3st,objeto4st))
+## graficar  1 y 3 con un solo corchete
+plot.ts(conjunto[,c(1,3)])
+conjuntost<-ts.intersect(conjunto)
+
+#############EJERCICIO########################
+
+## bajar datos del PIB crecimiento anual en mexico  de 1980 a 2015
+##crear 4 st
+## 1980 a 1990 (1)
+## 1991 a 2000 (2)
+## 2001 a 2010 (3)
+## 2011 a 2015 (4)
+## graficar en una misma imagen la st 2 y 3
+## graficar st 1 y 4 en una misma imagen
+
+pib<- ts(read.csv(("C:\\Users\\Sala-D\\Documents\\pib mexico 1980-2015.csv")))
+objst1<-ts(pib[1:11,1:2],start=1980,frequency = 1)
+objst1
+objst2<-ts(pib[12:21,1:2],start=1991,frequency = 1)
+objst3<-ts(pib[22:31,1:2],start=2001,frequency = 1)
+objst4<-ts(pib[32:36,1:2],start=2011,frequency = 1)
+plot(cbind(objst2,objst3))
+plot(cbind(objst1,objst4))
