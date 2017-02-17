@@ -1,0 +1,47 @@
+### para descomponer una sere de tiempo graficamente se utiliza una funcion 
+## que se llama descompose, por lo que rpimero es importante
+##reconocer la serie de tiempo y despues aplicarle la funcion graficamente
+desoc<-sample (3:8,44 ,replace=T)
+tdesoc<- ts (desoc,frequency = 4, start=2005)
+plot(decompose(tdesoc))
+plot(tdesoc) ## muestra estacionalidad 
+##### practica 6 #########
+tiie<-(read.csv("C:\\Users\\Sala-D15\\Downloads\\TIIE2015.csv"))
+sttiie<- ts (tiie, frequency = 52, start=2005)              
+plot(sttiie)
+plot(decompose(sttiie))
+
+pib<-(read.csv("C:\\Users\\Sala-D15\\Downloads\\PIB México.csv"))
+stpib<- ts(pib,frequency = 4,start=2007)
+plot(stpib)
+plot(decompose(stpib))
+View(stpib)
+summary(stpib)
+names(stpib$trendy)
+dpibst<- decompose(stpib) ## descompongo la serie de tiempo para pobder observar los elementos en la serie
+names(dpibst)
+dpibst$trend ## mando llamar los datos q se graficaron en tendencia 
+dpibst$seasonal
+dpibst$random
+
+#### ejercicio con la serie de luly (tasa de desocupoacion 2005-2016 frecuencia trimestral) ####
+##componerla graficamente
+## descomponer y mandar llamar cada componente de la serie 
+## realizar un analisis o interpretacion de sobre los datos observados
+
+ejercicio<-(read.csv("C:\\Users\\Sala-D15\\Downloads\\tarea2.csv"))
+stejercicio<- ts (ejercicio, frequency = 4, start=2005)              
+plot(stejercicio)
+plot(decompose(stejercicio))
+
+dejercicio<- decompose(stejercicio) ## descompongo la serie de tiempo para pobder observar los elementos en la serie
+names(dejercicio)
+dejercicio$trend ## mando llamar los datos q se graficaron en tendencia 
+dejercicio$seasonal
+dejercicio$random
+
+### interpretacion tasa de desocupación 
+##del periodo de 2006-2008 hubo un descenso significativo esto se podria deber a
+##la informalidad  que tuvo un crecimiento de .08% enb el promer trimestre del año 
+## tambien podria ser por los bajos niveles de estudios que existen o bien por la crisis 
+## economica que hubo, luego tiene un periodo de recuperacion de 2008-2011
