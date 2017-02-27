@@ -1,0 +1,69 @@
+###descomposicion clasica
+### se utiliza la funcion descompose
+### otro tipo de descomposicion de la estacionariedad
+### tendencia y estacionariedad es la descomposición
+##por Loess la cual esta basada en un algoritmo que permite
+## descomponerlas series de tiempo en tres elementos: estacionariedad,
+##tendencia y aleatoriedad, una de las ventajas de esta descomposicion es el calculo
+## de la estacionariedad que se obtienen valores de
+##estacionariedad no constantes, en contraste con el metodo clasico de descomposicion
+
+############# descomposicion clasica
+## se utiliza la funcion decompose por ejemplo
+desocupacion<-read.csv(file.choose())
+
+class(desocupacion)
+des<- ts(desocupacion)
+class(des)
+des<-ts(desocupacion[1:48,1],frequency = 4,start = 2005)
+desco<- decompose(des)
+tend1<-desco$trend
+plot(tend1,col="blue",main="tendencia desocupacion", ylab="tasas", xlab="años")
+
+lines (tend2,col="red")
+##### descomposicion tendencia, estacional por Loose
+##se utiliza la funcion stl()
+## entonces para descomponer por Loose utilizamos
+desco2<- stl(des,s.window = "periodic",robust=T)
+## normalmente la tendencia hayq ponerla periodica
+##para verla
+names(desco2)
+desco2
+desco$trend
+tend2<- desco2$time.series[,2] ### tenemos la matriz extraeme las entradas x
+tend2
+esta2<- desco2$time.series[,1]
+esta2
+
+
+##### ejercicio hacer lo mismo pero con la del pib
+PIB<-read.csv(file.choose())
+
+pib<-ts(PIB[1:35,1],frequency = 4,start = 2007)
+pib1<- decompose(pib)
+tendpib<-pib1$trend
+plot(tendpib,col="pink",main="tendencia PIB", ylab="tasas", xlab="años")
+
+lines (tendpib2,col="purple")
+##### descomposicion tendencia, estacional por Loose
+
+pib2<- stl(pib,s.window = "periodic",robust=T)
+## normalmente la tendencia hayq ponerla periodica
+##para verla
+names(pib2)
+pib2
+pib1$trend
+tendpib2<- pib2$time.series[,2] ### tenemos la matriz extraeme las entradas x
+tendpib2
+estapib2<- pib2$time.series[,1]
+estapib2
+
+
+#### ajuste estacional
+install.packages("fpp")
+require(fpp)
+ajus<- seasadj(desco2)### ajustamos estacionariedad
+#########pronostico metodo ingenuo
+inge1<- naive(ajus,h=4) ### naive realiza el pronostico, pirmer argumentolo q quieres pronisticar  el segundo es cuantos periodos quieres q t pronostique
+plot(inge1)
+inge1
