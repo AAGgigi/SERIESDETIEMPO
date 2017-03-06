@@ -1,0 +1,29 @@
+install.packages("fpp")
+require(fpp)
+plot(window(elec,start=1980),ylab="GWH",xlab="YEAR",main="australian electricity production")
+
+###estacionariedad, tendencia y ciclico
+seasonplot(elec,s=4,year.labels = TRUE, main="electricidad", ylab="año",col=rainbow(20),year.labels.left = TRUE,pch=10)
+##S=12 periodos 
+## ver en q meses hay mayor incremento de estacionariedad grafica por años
+plot(bricksq, ylab="million units",xlab="year", main="australian clay brick production")
+
+seasonplot(bricksq,s=12,year.labels = F, main="electricidad", ylab="año",col=rainbow(20),year.labels.left = TRUE,pch=15)
+### estacionariedad y ciclo no mucha tendencia
+plot(hsales,main="sales of new one-family houses, USA",ylab= "total sales", xlab="year")
+
+seasonplot(hsales,s=12,year.labels = F, main="electricidad", ylab="año",col=rainbow(20),year.labels.left = TRUE,pch=15)
+## no estacionariedad ni tendencia, posible ciclo
+
+dec<- decompose(bricksq)
+##eliminando tendencia
+sinesta<- bricksq - dec$seasonal
+sintend<- bricksq -dec$trend
+
+plot(sinesta)
+plot(sintend)
+
+###EJERCICIO
+##### ejemplos graficas detectar tendencia, estacionalidad y ciclo
+### analizzar a que se debe cada una de los elementos encontrados de (200-2015)
+##pin % anual 
