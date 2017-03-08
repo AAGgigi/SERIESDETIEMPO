@@ -1,0 +1,10 @@
+tarea <-read.csv(file.choose())
+PIB<-ts(tarea,frequency = 1,start=2000, end=2015)
+PIB
+
+install.packages("fpp")
+require(fpp)
+plot(window(PIB,start=2000,end=2015), ylab = "Tasa", xlab="AÑO", main="% PIB MEXICO 2000-2015",col= "red")
+
+seasonplot(PIB,s=12,year.labels = TRUE, main=" PIB 2000-2015", ylab="%TASA",XLAB="MESES",col=rainbow(20),year.labels.left = TRUE,pch=10)
+
