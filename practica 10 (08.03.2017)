@@ -1,0 +1,23 @@
+deso<-data.frame(read.csv("C:\\users\\sala\\tarea2.csv"))
+desot<-ts(deso,frequency = 4, start=2005)
+plot(desot)
+lines(eeadj,col="blue")
+dectsd<-decompose(desot)
+dectsdmul<-decompose(desot,type="mult")
+
+plot(dectsd)
+plot(dectsdmul)
+
+
+### desestacionalizar una serie
+### se desestacionaliza una serie de tiempo por diferentes razones
+## entre las que destacan la desestacionalización para poder predecir
+##nuetsros daros con mayor precision y sin contar con factores
+## externos al comportamiento de nuestros datos
+## dos elementos permiten desestacionalizar una serie
+require(fpp)
+eeadj<- seasadj (dectsd)
+eeadj
+plot(eeadj)
+sinesta<- desot- dects$seasonal
+eeadj- sinesta
