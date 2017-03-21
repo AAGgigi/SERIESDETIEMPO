@@ -1,0 +1,11 @@
+x<-read.csv(file.choose())
+y<-read.csv(file.choose())
+x
+y
+covarianza<-sum((x-mean(x[,1]))*(y-mean(y[,1]))/(length(x[,1])-1));covarianza
+
+cov(x[,1],y[,1])
+
+cor<-cov/(sd(x[,1])*sd(y[,1]));cor
+
+cor(x[,1],y[,1])
