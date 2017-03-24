@@ -1,0 +1,40 @@
+pib<-data.frame(read.csv("C:\\Users\\Sala-D15\\Downloads\\PIB MEXICO TASA.csv"))
+pibt<-ts(pib,frequency = 12,start=2005)
+
+acf(pibt)
+
+
+######TAREA BUSCAR UNA SERIE dE TIEMPO DE MEXICO 
+### en donde con el correlograma determinen que tiene ruido blanco 
+### otra serie donde el correlograma exponga que tiene st caminata aleatoria
+#por equipo
+
+##################### MODELOS LINEALES PARA PRONOSTICAR
+######METODO INGENUO
+##son la aplicacion de pronosticos lineales
+## como el ingenuo, promedio, ingenuo estacional y el de deriva
+## el pronostico ingenuo esta basado en la ultima observacion que 
+## arroja la serie de tiemp. es decir este pronostico asume que la observacion mas importante es la ultima
+###FUNCION EN r
+#naive(serie, h=num pronosticos) segundo argumento cuantos pronosticos queires
+install.packages("forecast")
+require(forecast)
+naive(pib,h=4)
+
+###METODO PROMEDIO
+##este metodo le da el mismo peso a todos los datos u observaciones
+## es decir, se asume con este metodo que todas las observaciones
+## tienen la misma importancia por lo que el pronostico
+#### es un promedio de todas las observaciones
+### funcion para r meanf(serie, h=numero de pronosticos)
+meanf(pibt,h=4) ### ocupo la de time serie
+plot(meanf(pibt,h=4))
+
+##METODO INGENUO ESTACIONAL
+## este metodo se utiliza en series de tiempo
+##con alta estacionalidad este pronostico consiste en darle el mayor peso o la mayor
+## ponderacion al dato del mismo periodo
+## en el año anterior, por ejemplo trimestre 2 del 2005 es igual al trimestre 2 del 2006
+## la funcion para utilizR EN R es:
+### snaive(serie,h= numero de pronosticos)
+snaive(pib,h=4)
