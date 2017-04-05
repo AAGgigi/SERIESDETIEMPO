@@ -1,0 +1,44 @@
+install.packages(foreign)
+require (foreign)
+
+coe2<- read.dbf("C:/Users/Sala-D15/Desktop/coe2t116.dbf")
+
+##ls listra de las variables de la base de dartos
+ls(coe2)
+## cambiar la variable que tenemos a numerico 
+coe2$P6D<-as.numeric(as.character(coe2$P6D))
+
+##subset hace un subconjuto de tu base de datos (base, filtro | operador logico o )
+
+coesins<-subset(coe2,coe2$P6D==1 |coe2$P6D==2| coe2$P6D==3|coe2$P6D==4|coe2$P6D==5)
+
+### ifelse
+
+coe2$sinseg<- ifelse(coe2$P6D>=1 &coe2$P6D<=5,1,ifelse(coe2$P6D>=6 & coe2$P6D<=9,2,0))
+
+table(coe2$sinseg)
+
+### ejericico con la variable desocupados
+
+coe1<- read.dbf("C:/Users/Sala-D15/Desktop/coe1t116.dbf")
+coe1$c<-as.numeric(as.character(coe1$P1C))
+coe1$b<-as.numeric(as.character(coe1$P1B))
+coe1$d<-as.numeric(as.character(coe1$P2_1))
+coe1$e<-as.numeric(as.character(coe1$P2_2))
+coe1$f<-as.numeric(as.character(coe1$P2_3))
+coe1$g<-as.numeric(as.character(coe1$P2B))
+coe1$h<-as.numeric(as.character(coe1$P2C))
+coe1$i<-as.numeric(as.character(coe1$P1D))
+
+
+coe1$deso<- ifelse(coe1$c==11,1, ifelse((coe1$b==2)& (coe1$d==1|coe1$e==2|coe1$f==3)&(coe1$g==1)&(coe1$h!=2 | coe1$h!=9),2,
+                 ifelse((coe1$i==2|coe1$i==9) & (coe1$d==1|coe1$e==2|coe1$f==3)& (coe1$g==1)&(coe1$h!=2 & coe1$i!=9),3,0)))
+
+ls(coe1)
+table(coe1$deso)
+
+install.packages("questionr")
+require(questionr)
+### expande los datos con la variable fac porq solo tenemos datos muestrales
+wtd.table(coe1$deso,weights=coe1$FAC)
+ls(coe1)
