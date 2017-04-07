@@ -1,0 +1,54 @@
+install.packages(foreign)
+require (foreign)
+require(fpp)
+deso<- read.csv("C://Users//Sala-D15//Downloads//tarea2.csv")
+des<-ts(deso,frequency=4,start=2005)
+
+### suavizado exponencial con 4 modelos lo q cambia es el aplha
+
+mod1<-ses(des,alpha=0.1,initial="simple",h=8)
+mod2<-ses (des,alpha=0.3,initial="simple",h=8)
+mod3<-ses(des,alpha=0.9,initial="simple",h=8)
+mod4<-ses(des,alpha=0.95,initial="simple",h=8)
+plot(mod1,ylab="tasa",xlab="años",main="desocupacion",type="o")
+lines(fitted(mod1),col="brown",type="o")
+lines(fitted(mod2),col="red",type="o")
+lines(fitted(mod3),col="blue",type="o")
+lines(fitted(mod4),col="green",type="o")
+
+##modelo 1
+aa<- des- mod1$fitted ### aplicando el error de resuduales mod1 fitted son los valores ajustados de nuesro modelo 1
+aa
+## calcular el mae que es la media del error absoluto
+mean(abs(aa)) ### MAE
+sqrt(mean(aa)^2) ## RMSE
+## para calcularlo con una funcuon en r se  usa el accurracy calcula los diferentes residulos para evaluar los residuos
+evalm1<- accuracy(mod1)
+evalm1
+
+
+##modelo 2
+bb<- des- mod2$fitted 
+bb
+mean(abs(bb)) ### MAE
+sqrt(mean(bb)^2) ## RMSE
+evalm2<- accuracy(mod2)
+evalm2
+
+##modelo3
+cc<- des- mod3$fitted 
+cc
+mean(abs(cc)) ### MAE
+sqrt(mean(cc)^2) ## RMSE
+evalm3<- accuracy(mod3)
+evalm3
+
+
+##modelo4
+dd<- des- mod4$fitted 
+dd
+mean(abs(dd)) ### MAE
+sqrt(mean(dd)^2) ## RMSE
+evalm4<- accuracy(mod4)
+evalm4
+
