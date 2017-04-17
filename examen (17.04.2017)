@@ -64,32 +64,28 @@ sqrt(mean(dd)^2) ## RMSE
 evalm4<- accuracy(mod4)
 evalm4
 names (evalm4)
+
 vectorMAE1<-c(evalm1[2],evalm2[2],evalm3[2],evalm4[2])
 vectorRMSE1<-c(evalm1[3],evalm2[3],evalm3[3],evalm4[3])
 
 vectorMAE<-t(vectorMAE1)
 vectorMAE
-vectorRMSE
+vectorRMSE<-t(vectorRMSE1)
 
 minMAE<-min(vectorMAE)
 minRMSE<-min(vectorRMSE)
 
-if( vectorMAE == min(vectorMAE)) {
-  if (min(vectorMAE)==vectorMAE[,1])
-    print("el mejor e sel modelo 1")}
-  
-else {
-  if(min(vectorMAE)E==vectorMAE[,2]) {
-    print("el mejor e sel modelo 2")
-   
-  } }
-  else {
-    if(min(vectorMAE)==vectorMAE[,3]) {
-      print("el mejor e sel modelo 3")
-      
-  }}
-else {
-  if(min(vectorMAE)==vectorMAE[,4]) {
-    print("el mejor e sel modelo 4")
     
-  }}
+
+mae<-ifelse(vectorMAE[,1]== minMAE,  "el mejor es modelo 1", 
+             ifelse(vectorMAE[,2]==minMAE, "el mejor es modelo 2",
+                    ifelse(vectorMAE[,3]==minMAE, "el mejor es modelo 3",
+                           ifelse(vectorMAE[,4]==minMAE, "el mejor es modelo 4",0))))
+mae
+
+RMSe<-ifelse(vectorRMSE[,1]== minRMSE,  "el mejor es modelo 1", 
+            ifelse(vectorRMSE[,2]==minRMSE, "el mejor es modelo 2",
+                   ifelse(vectorRMSE[,3]==minRMSE, "el mejor es modelo 3",
+                          ifelse(vectorRMSE[,4]==minRMSE, "el mejor es modelo 4",0))))
+RMSe
+
