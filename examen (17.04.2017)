@@ -1,0 +1,95 @@
+##### ejercicio bajar acciones de netflix diario precio de cierre 2016
+#####ajustar 4 modelos de suavizado exponencial simple (alpha=.2,.4,.6,.8)
+##graficaelos en una sola grafica
+#### con la grafica decidir cual de los 4 es el mejor ajuste que tiene
+###una vez que hayan decidido grafica,mente el mejor ajuste
+##aplicar la evaluacion de los ajustes y utilizar las medidas mae y RMSE extrayendolas de tal 
+## forma que creen un vetor que compare estas medidad y este vector indique que alpha es la mejor
+### identificar tendencia, estacionariedad y ciclos en la serie de tiempo e iNTERPRETAR ESTOS COMPONENENTES
+
+install.packages(foreign)
+require (foreign)
+require(fpp)
+
+net<- read.csv("C://Users//Sala-D15//Downloads//netflix.csv")
+netflix<-ts(net,frequency=254,start=2016)
+
+### suavizado exponencial con 4 modelos lo q cambia es el aplha
+
+mod1<-ses(netflix,alpha=0.2,initial="simple",h=8)
+mod2<-ses (netflix,alpha=0.4,initial="simple",h=8)
+mod3<-ses(netflix,alpha=0.6,initial="simple",h=8)
+mod4<-ses(netflix,alpha=0.8,initial="simple",h=8)
+
+plot(mod1,ylab="precio",xlab="diario",main="acciones netflix",type="o")
+lines(fitted(mod1),col="brown",type="o")
+lines(fitted(mod2),col="red",type="o")
+lines(fitted(mod3),col="blue",type="o")
+lines(fitted(mod4),col="pink",type="o")
+
+ #### el modelo 4 con alpha iguañ a .8 se ajusta mejor a los datos reales 
+ 
+##modelo 1
+aa<- netflix- mod1$fitted
+aa
+## calcular el mae que es la media del error absoluto
+mean(abs(aa)) ### MAE
+sqrt(mean(aa)^2) ## RMSE
+evalm1<- accuracy(mod1)
+evalm1
+
+
+##modelo 2
+bb<- netflix- mod2$fitted 
+bb
+mean(abs(bb)) ### MAE
+sqrt(mean(bb)^2) ## RMSE
+evalm2<- accuracy(mod2)
+evalm2
+
+##modelo3
+cc<- netflix- mod3$fitted 
+cc
+mean(abs(cc)) ### MAE
+sqrt(mean(cc)^2) ## RMSE
+evalm3<- accuracy(mod3)
+evalm3
+
+
+##modelo4
+dd<- netflix- mod4$fitted 
+dd
+mean(abs(dd)) ### MAE
+sqrt(mean(dd)^2) ## RMSE
+evalm4<- accuracy(mod4)
+evalm4
+names (evalm4)
+vectorMAE1<-c(evalm1[2],evalm2[2],evalm3[2],evalm4[2])
+vectorRMSE1<-c(evalm1[3],evalm2[3],evalm3[3],evalm4[3])
+
+vectorMAE<-t(vectorMAE1)
+vectorMAE
+vectorRMSE
+
+minMAE<-min(vectorMAE)
+minRMSE<-min(vectorRMSE)
+
+if( vectorMAE == min(vectorMAE)) {
+  if (min(vectorMAE)==vectorMAE[,1])
+    print("el mejor e sel modelo 1")}
+  
+else {
+  if(min(vectorMAE)E==vectorMAE[,2]) {
+    print("el mejor e sel modelo 2")
+   
+  } }
+  else {
+    if(min(vectorMAE)==vectorMAE[,3]) {
+      print("el mejor e sel modelo 3")
+      
+  }}
+else {
+  if(min(vectorMAE)==vectorMAE[,4]) {
+    print("el mejor e sel modelo 4")
+    
+  }}
