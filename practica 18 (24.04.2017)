@@ -1,0 +1,29 @@
+##generar serie de teimpo estacional minimo 15 datos y aplicar el pronostico
+ ###de los dos metodos de hol winter y el de tendencia exponencial
+
+install.packages(foreign)
+require (foreign)
+require(fpp)
+
+require (forecast)
+dol<- read.csv("C://Users//Sala-D15//Downloads//cierre.csv")
+dolar<-ts(dol,frequency=254,start=2016)
+dolar
+dolarc<-window(dolar,start=c(2016,1),end=c(2016,18))
+dolarc
+dolars<-window(dolar,start=c(2016,18),end=c(2016,23))
+dolars
+
+plot(dolar)
+
+modexp<-holt(dolarc,alpha=.8,beta=.2, initial="simple",exponential=TRUE,h=5)
+modwin1<-hw(dolarc,seasonal="additive",h=5)
+modwin2<-hw(dolarc,seasonal="multiplicative",h=5)
+
+ plot(modwin2)
+ plot(modwin1)
+plot(modexp,ylab="cierre",xlab="diario",main="precio dolar",type="o")
+lines(dolars,col="pink",type="o")
+lines(modwin1$mean,col="yellow",type="o")
+lines(modwin2$mean,col="red",type="o")
+legend("topleft",lty=1,col=c("pink","yellow","red"),c("real","w1","w2"),pch=22)
