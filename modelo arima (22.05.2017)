@@ -1,0 +1,62 @@
+c<- read.csv("C://Users//Sala-D15//Downloads//seriecemex.csv")
+cemex<-ts(c,frequency=252,start=2016)
+cemex
+
+b<- read.csv("C://Users//Sala-D15/Downloads//bimbo.csv")
+bimbo<-ts(b,frequency=252,start=2016)
+
+require (fpp)
+View(b)
+### revisar si nuestra serie es estacionaria
+### se aplica la prueba de raiz unitaria a traves de la funcion
+###adf.test y esperamos que el p-value sea menor a .05
+## ocupo libreria fpp
+adf.test(bimbo)
+dbimbo<-diff(bimbo)### aplicamos la primera diferenciacion con la funcion diff
+## debidp  que la serie original no es estacionaria
+adf.test(dbimbo)
+###que nuestra serie en su primera diferenciacion se convierte en estacionaria
+acf(dbimbo) ### en este determinamos el numero de q que se asocia con los modelos de promedios moviles
+## para determinar el valor de p que se relaciona con los modelos 
+##autoregresivos se utiliza la funcion pacf()
+pacf(dbimbo)###segun el correlograma de pacf el valor de p es 1
+## pro lo que s epropone un modelo ARIMA(1,1,2)
+modbim<-Arima(bimbo, order=c(1,1,2))
+modbim
+modbim1<- Arima(bimbo,order=c(1,1,2))
+modbim1
+####entre estos dos modelos habria que revisar el valor de AICC y el menor valor de
+##AICC seria el mejor modelo con el criterio de AIKAIKE
+modres<- residuals(modbim)## residuuales del  modelo que tiene que tener ruido blanvco para poder pronosticar tu modelo por eso la linea de abajo
+Box.test(modres,lag=12,type="Ljung-Box")## p valuees grande por lo tanto tiene ruido blanco
+##los residuales son ruidos blancos
+mod1<-forecast(modbim,h=12)
+x11()
+plot(forecast(modbim,h=12), include=18)### include t da los ultomos 18datos pra visualizar
+plot (forecast(modbim,h=12) )
+mod1
+summary(mod1)
+auto.arima(bimbo)
+
+mod1res<-residuals(modbim1)
+Box.test(mod1res,lag=12,type="Ljung-Box")
+mod2<-forecast(modbim1,h=12)
+plot(forecast(modbim1,h=12),include=25)
+
+####################################ejercicio con cemex
+adf.test(cemex)
+dcemex<-diff(cemex)
+adf.test(dcemex)### el numero de veces que aplicaste para llegar a p value de .01
+acf(dcemex) ###los que sobresalen de la grafica es el tercer valor del arima
+pacf(dcemex)### el primer valor de arima
+modcemex<-Arima(cemex, order=c(2,1,2))
+modcemex
+modresc<- residuals(modcemex)##residuales
+Box.test(modresc,lag=12,type="Ljung-Box")
+mod1c<-forecast(modcemex,h=12)
+x11()
+plot(forecast(modcemex,h=12), include=18)
+plot (forecast(modcemex,h=12) )
+mod1c
+summary(mod1c)
+auto.arima(cemex)
