@@ -1,0 +1,70 @@
+acc<- read.csv("C://Users//Sala-D15//Downloads//AMX (2).csv")
+##acciones telmex 24/05/2016-24/05/2017
+### solo lo ocupamos para conocer el proceso que hace arima para los calculos
+require(forecast)
+cc1<-ts(acc[,5],frequency=252,start=2016)
+cc1
+
+zz<-arima(cc1,order=c(1,0,0)) ## modelo autoregresivo de orden uno planteado como arima
+zz
+###yt=c+fi1(yt-1)+fi2(yt-2)+.....+fin(yt-n)+et
+## en este caso el modelo AR(1) se okantea de la siguiente manera
+##yt=13.3425+.9864(yt-1)+et..... en este caso fi1=.9864 (es el coeficiente del modelo autorregresivo 1)
+### el 13.34 es el intercepto (siemre va a ser las constantes los demas numeros seran mi coeficiente de fi)
+## si tuvieramos un modelo autoregresivo de orden 2 se expresa como modelo arima de la siguiente manera
+
+zz2<- arima(cc1, order=c(2,0,0))
+zz2
+
+## en este caso el modelo AR(2) se plantea de la siguiente manera
+##yt=13.2634+1.0601(yt-1)-.0755(yt-2)+et.... en este caso fi1=1.0610, fi1=-.0755
+
+## Arima con mayiuscula nos da mas valores del criterio aic DA MAS INFORMACION Aicc
+zzA<- Arima(cc1, order=c(2,0,0))
+zzA
+
+## AHORA BIEN SI TENEMOS DE PROMEDIOS MOVILES MA(q) se puede expresar 
+##Yt=c+teta(et-1)+teta2(et-2)+....+tetap(et-q)+et
+## a traves de un modelo ARIMA se puede expresa de esta  forma como lo podriamos representar:
+
+yy<-arima(cc1,order=c(0,0,1)) ## en este caso es un MA(1)
+yy
+##que se puede expresar de la siguiente manera
+##yt=c+teta(yt-1)+teta2(yt-2)+.....+tetap(yt-p)
+### para el modelo planteado se expresa 
+#yt=12.7904+.8605(et-1)+et en estecaso teta=.8605
+
+## para un modelo de promedios moviles de orden dos se expresa en un modelo ARIMA como:
+yy2<-Arima(cc1, order=c(0,0,2))
+yy2
+## en este caso se tiene un modelo de MA(2)
+## para el modelo empleado se expresa 
+##yt=12.7481+1.339(et-1)+.7423(et-2)+et.... en este caso
+## c=12.7481, teta=1.339, teta2=.7423
+
+
+##modelos ARIMA (con diferenciacion)
+y´t=c+fi(y´t-1+)+.......+fip(y´t-p)+teta(et-1)+teta2(et-2)+......+tetap(et-q)+et
+
+##para un modelo ARIMA con p=2,d=3, q=2 expresa:
+yy3<- arima(cc1,order=c(2,3,2))
+yy3
+
+##con este modelo expresamos
+y´´´t=.8710(y´´´t-1)-.3364(y´´´t-2)-.8362(et-1)+.1378(et-2)+et
+
+
+######################EJERCICIO############################
+
+Ix<- read.csv("C://Users//Sala-D15//Downloads//IXETRBF3.MX (1).csv")
+require(forecast)
+ix1<-ts(Ix[,5],frequency=252,start=2016)
+ix1
+
+zz<-arima(ix1,order=c(0,3,2)) 
+zz2<- arima(ix1, order=c(0,3,2))
+zz2
+yt=-1.9982(et-1)+(et-2)
+
+
+### cuando sale ar es en terminos de yt cuando sale ma en et
